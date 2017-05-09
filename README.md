@@ -15,7 +15,7 @@
 ## Install
 
 ```bash
-$ yarn add global awsprofiles
+$ yarn global add awsprofiles
 ```
 
 ## CLI
