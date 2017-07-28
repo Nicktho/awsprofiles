@@ -38,17 +38,13 @@ Promise.resolve()
       throw new Error('No default profile is set');
     }
 
-    const currentDefaultProfile = Object.keys(credentials).find(profile => profile === 'default' && credentials[profile].awsAccessKeyId === credentials.default.awsAccessKeyId);
+    const currentDefaultProfile = Object.keys(credentials).find(profile => profile !== 'default' && credentials[profile].awsAccessKeyId === credentials.default.awsAccessKeyId);
 
     if (!currentDefaultProfile) {
       throw new Error('Current default profile is not named in profile list, please check README.md for valid configuration');
     }
 
-    const profiles = Object.keys(credentials).filter(profile => profile !== 'default' && profile !== currentDefaultProfile);
-
-    if (!profiles) {
-      throw new Error(`Only profile ${chalk.magenta(currentDefaultProfile)} found and is set as default.`);
-    }
+    const profiles = Object.keys(credentials).filter(profile => profile !== 'default');
 
     if (cli.input.length > 0) {
       const input = cli.input[0];
