@@ -33,7 +33,7 @@ const credentialsFile = cli.flags.credentials;
 Promise.resolve()
   .then(() => {
     const credentials = parseCredentials(fs.readFileSync(credentialsFile, 'utf8'));
-    
+
     if (!credentials.default) {
       throw new Error('No default profile is set');
     }
@@ -44,7 +44,7 @@ Promise.resolve()
       throw new Error('Current default profile is not named in profile list, please check README.md for valid configuration');
     }
 
-    const profiles = Object.keys(credentials).filter(profile => profile !== 'default');
+    const profiles = Object.keys(credentials).filter(profile => profile !== 'default' && profile !== currentDefaultProfile);
 
     if (cli.input.length > 0) {
       const input = cli.input[0];
@@ -62,6 +62,11 @@ Promise.resolve()
     console.log('');
     console.log(`Current AWS profile ${chalk.magenta(currentDefaultProfile)}`);
     console.log('');
+
+    profiles.push({
+      name: `${currentDefaultProfile} - (current default)`,
+      value: currentDefaultProfile,
+    });
 
     const prompts = [
       {
