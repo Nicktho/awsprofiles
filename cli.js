@@ -38,7 +38,7 @@ Promise.resolve()
       throw new Error('No default profile is set');
     }
 
-    const currentDefaultProfile = Object.keys(credentials).find(profile => profile !== 'default' && credentials[profile].awsAccessKeyId === credentials.default.awsAccessKeyId);
+    const currentDefaultProfile = Object.keys(credentials).find(profile => profile === 'default' && credentials[profile].awsAccessKeyId === credentials.default.awsAccessKeyId);
 
     if (!currentDefaultProfile) {
       throw new Error('Current default profile is not named in profile list, please check README.md for valid configuration');
