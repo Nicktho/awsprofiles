@@ -63,17 +63,17 @@ Promise.resolve()
     console.log(`Current AWS profile ${chalk.magenta(currentDefaultProfile)}`);
     console.log('');
 
-    profiles.push({
+    const choices = [{
       name: `${currentDefaultProfile} - (current default)`,
       value: currentDefaultProfile,
-    });
+    }].concat(profiles);
 
     const prompts = [
       {
         type: 'list',
         name: 'profile',
         message: 'Select AWS profile',
-        choices: profiles,
+        choices,
         validate: input => profiles.includes(input) || `Profile ${input} does not exist in ${chalk.magenta(credentialsFile)}`,
       },
     ];
