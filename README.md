@@ -42,7 +42,7 @@ Running `awsprofiles` without arguments provides an interactive UI similar to th
 
 ## Configuration
 
-Expects an `~/.aws/configure` file similar to the format below:
+Expects an `~/.aws/credentials` file similar to the format below:
 
 ```
 [default]
