@@ -33,7 +33,7 @@ const credentialsFile = cli.flags.credentials;
 Promise.resolve()
   .then(() => {
     const credentials = parseCredentials(fs.readFileSync(credentialsFile, 'utf8'));
-    
+
     if (!credentials.default) {
       throw new Error('No default profile is set');
     }
@@ -45,10 +45,6 @@ Promise.resolve()
     }
 
     const profiles = Object.keys(credentials).filter(profile => profile !== 'default' && profile !== currentDefaultProfile);
-
-    if (!profiles) {
-      throw new Error(`Only profile ${chalk.magenta(currentDefaultProfile)} found and is set as default.`);
-    }
 
     if (cli.input.length > 0) {
       const input = cli.input[0];
@@ -67,12 +63,17 @@ Promise.resolve()
     console.log(`Current AWS profile ${chalk.magenta(currentDefaultProfile)}`);
     console.log('');
 
+    const choices = [{
+      name: `${currentDefaultProfile} - (current default)`,
+      value: currentDefaultProfile,
+    }].concat(profiles);
+
     const prompts = [
       {
         type: 'list',
         name: 'profile',
         message: 'Select AWS profile',
-        choices: profiles,
+        choices,
         validate: input => profiles.includes(input) || `Profile ${input} does not exist in ${chalk.magenta(credentialsFile)}`,
       },
     ];
